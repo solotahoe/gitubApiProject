@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax3</title>
+    <style>
+        .users{
+            display: flex;
+            background: #C0C0C0;
+            padding: 20px;
+            margin-bottom: 10px;
+            width: 250px;
+            float:left;
+            margin-right: 5px;
+        }
+       
+        .users ul{
+            list-style-type: none;
+        }
+        #button{
+            background:	#5bc0de;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color:black;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        h1{
+            text-decoration: underline;
+            font-size: 25px;
+            color: red;
+        }
+        #fuserFollowers{
+            background:	#5bc0de;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            cursor: pointer;
+            
+        }
+    
+    </style>
+</head>
+<body>
+    <h1>GITHUB USERS</h1>
+  
+    
+    <button id="button">LOAD GITHUB USERS</button>
+    <br/>
+    <br/>
+    
+    
+    <div id="githubUsers">
+
+    </div>
+    <div id="followers">
+
+    </div>
+    
+    <script>
+        document.getElementById("button").addEventListener("click", loadUsers);
+        function loadUsers(){
+            const xhr=new XMLHttpRequest();
+            xhr.open("GET", "https://api.github.com/users",true);
+            xhr.onload=function(){
+                if(this.status==200){
+                    const users=JSON.parse(this.responseText);
+                    console.log(users);
+                    let output="";
+                    for(let i in users){
+                        output+= '<div class="users">' + 
+                            '<img src="' + users[i].avatar_url + '" width="70" height="70">' +
+                        '<ul>'+
+                        '<li> ID:'+users[i].id+ '</li>'+
+                        '<li> login:'+users[i].login+ '</li>'+
+                        '<li>'+'<a href="followers.html"'+ "id=followers>" +"Folowers:"+ "</a>" + '</li>'+
+                        '</ul>' +
+                        '</div>';
+                }
+                document.getElementById("githubUsers").innerHTML=output;
+                //
+                }
+            }
+            xhr.send();
+        }
+
+       
+    
+
+        
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX AND HTTP REQUEST</title>
+</head>
+<body>
+    <button id="button">Get Text file</button>
+    <div id="text"></div>
+
+
+
+<script>
+document.getElementById("button").addEventListener("click",loadText);
+
+function loadText(){
+
+    //creat the xml object
+   const xhr=new XMLHttpRequest();
+   //open 
+   xhr.open("GET", "sample.text", true);
+   xhr.onload=function(){
+       if(this.status==200){
+        document.getElementById("text").innerHTML=this.responseText;
+       }
+   }
+
+
+
+    // xhr.onreadystatechange=function(){
+    //     if(this.readyState==4 && this.status==200){
+    //         console.log(this.responseText)
+    //     }
+    // }
+   //sends request
+   xhr.send();
+}
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

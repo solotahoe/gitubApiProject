@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Followers</title>
+    <style>
+
+
+        .followers{
+
+            margin-left:20px;
+            margin-top: 50px;
+        }
+        .users2{
+            display: flex;
+            background: #808080;
+            padding: 20px;
+            margin-bottom: 10px;
+            width: 250px;
+            float:left;
+            margin-right: 5px;
+        }
+        .loading{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            font-size: 50px;
+        }
+        .dots{
+            animation-name: loading;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+        @keyframes loading {
+            0%{
+                opacity: 1;
+            }
+            25%{
+                opacity: 0;
+            }
+            50%{
+                opacity: 1;
+
+            }
+            75%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+
+        h1{
+            color: #5bc0de;
+        }
+    </style>
+</head>
+<body>
+    <H1>FOLLOWERS:<span id="numbers"></span></H1> 
+   
+    <div id="followers">
+
+        <h1 class="loading">loading<span class="dots">........</span></h1>
+    </div>
+    <script>
+        window.addEventListener("load", loadCotent);
+    function loadCotent(){
+        function getFollowers(){
+           const xhhr2=new XMLHttpRequest();
+           xhhr2.open("GET", "https://api.github.com/users/mojombo/followers",true);
+           xhhr2.onload=function(){
+            if(this.status==200){
+                const followers=JSON.parse(this.responseText);
+                let output2="";
+                const followersLength=followers.length;
+                console.log(followersLength);
+                document.getElementById("numbers").innerHTML=followersLength;
+                for(let i in followers){
+                    
+                        output2+= '<div class="users2">' + 
+                            '<img src="' + followers[i].avatar_url + '" width="70" height="70">' +
+                        '<ul>'+
+                        '<li> ID:'+followers[i].id+ '</li>'+
+                        '<li> login:'+followers[i].login+ '</li>'+
+                        '<li>'+'<a href=#'+ "id=followers>" +"Folowers:"+ "</a>" + '</li>'+
+                        '</ul>' +
+                        '</div>';
+                }
+                const followersArea=document.getElementById("followers");
+                followersArea.innerHTML=output2;
+               
+            }
+
+           }
+           xhhr2.send();
+
+        }
+        getFollowers();
+
+
+
+
+
+
+
+
+    }
+    </script>
+</body>
+</html>
